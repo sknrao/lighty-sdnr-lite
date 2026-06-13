@@ -1,0 +1,26 @@
+*.class
+**/target
+**/test-output
+**/journal
+**/segmented-journal
+**/snapshots
+**/*.db.mv.db
+
+bin/
+cache/
+dist
+.idea
+.classpath
+.project
+.settings
+
+*.iml
+*.ipr
+*.iws
+*.log
+
+# Auto-generated persistence files.
+persistence
+
+**/incarnation-v1
+**/TermInfo.properties
