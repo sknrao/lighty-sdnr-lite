@@ -176,20 +176,13 @@ public class LightyYangSchemaModule extends AbstractLightyModule {
         //
         try {
             final YangTextSourceExtension yangTextSchemaSourceExtension = lightyServices.getDOMSchemaService().extension(YangTextSourceExtension.class);
-            final Map<DOMSchemaServiceExtension,
-                      DOMSchemaServiceExtension> extensions =
-                    (Map<DOMSchemaServiceExtension, DOMSchemaServiceExtension>)
-                            (Map<?, ?>) domSchemaService.getExtensions();
-
-            for (final DOMSchemaServiceExtension ext : extensions.values()) {
+            for (final Object ext : domSchemaService.getExtensions().values()) {
                 if (ext instanceof SchemaRepository) {
                     LOG.debug("SchemaRepository obtained via DOMSchemaService extension: {}",
                               ext.getClass().getName());
                     return (SchemaRepository) ext;
                 }
                 if (ext instanceof SchemaSourceProvider) {
-                    // SchemaSourceProvider that is also a SchemaRepository —
-                    // SharedSchemaRepository implements both.
                     if (ext instanceof SchemaRepository) {
                         return (SchemaRepository) ext;
                     }
@@ -264,8 +257,20 @@ public class LightyYangSchemaModule extends AbstractLightyModule {
             //   f.setAccessible(true);
             //   Server server = (Server) f.get(communityRestConf);
             //
-            final org.eclipse.jetty.server.Server jettyServer =
-                    communityRestConf.getServer();
+            org.eclipse.jetty.server.Server jettyServer = null;
+            try {
+                java.lang.reflect.Method m = communityRestConf.getClass().getMethod("getServer");
+                jettyServer = (org.eclipse.jetty.server.Server) m.invoke(communityRestConf);
+            } catch (Exception e) {
+                try {
+                    java.lang.reflect.Field f = communityRestConf.getClass().getDeclaredField("server");
+                    f.setAccessible(true);
+                    jettyServer = (org.eclipse.jetty.server.Server) f.get(communityRestConf);
+                } catch (Exception ex) {
+                    LOG.error("Could not find jetty server field.", ex);
+                    return false;
+                }
+            }
 
             // ── Walk handler tree to find ServletContextHandler ────────────
             final ServletContextHandler ctx =

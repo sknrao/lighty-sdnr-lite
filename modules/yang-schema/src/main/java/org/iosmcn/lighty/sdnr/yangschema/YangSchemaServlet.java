@@ -208,7 +208,7 @@ public class YangSchemaServlet extends HttpServlet {
             // Pre-Scandium return type: ListenableFuture<YangTextSchemaSource>
             // Scandium+:               FluentFuture<YangTextSchemaSource>
             // Both implement Future<YangTextSchemaSource>, so .get() works for both.
-            YangTextSource source = globalSchemaRepository.getSource(sourceId).get(SOURCE_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+            YangTextSource source = globalSchemaRepository.getSchemaSource(sourceId, YangTextSource.class).get(SOURCE_TIMEOUT_SECONDS, TimeUnit.SECONDS);
 
             writeSource(resp, source);
 
@@ -325,12 +325,20 @@ public class YangSchemaServlet extends HttpServlet {
         // If not, fall back to the controller-global repository which caches
         // all sources it has loaded, including device-fetched ones.
         //
-        final Optional<SchemaRepository> deviceRepoOpt =
-                mountPoint.getService(SchemaRepository.class);
+        SchemaRepository deviceRepo = null;
+        final Optional<DOMSchemaService> mountedSchemaServiceOpt2 = mountPoint.getService(DOMSchemaService.class);
+        if (mountedSchemaServiceOpt2.isPresent()) {
+            for (final Object ext : mountedSchemaServiceOpt2.get().getExtensions().values()) {
+                if (ext instanceof SchemaRepository) {
+                    deviceRepo = (SchemaRepository) ext;
+                    break;
+                }
+            }
+        }
 
-        if (deviceRepoOpt.isPresent()) {
+        if (deviceRepo != null) {
             LOG.debug("Using device-specific SchemaRepository for node={}", nodeId);
-            serveFromRepository(resp, deviceRepoOpt.get(), resolvedId);
+            serveFromRepository(resp, deviceRepo, resolvedId);
         } else {
             // Fall back to the controller global repo — the source was downloaded
             // and registered there during device schema negotiation.
@@ -354,8 +362,8 @@ public class YangSchemaServlet extends HttpServlet {
                                      final SourceIdentifier sourceId)
             throws IOException {
         try {
-            final YangTextSchemaSource source =
-                    repository.getSchemaSource(sourceId, YangTextSchemaSource.class)
+            final YangTextSource source =
+                    repository.getSchemaSource(sourceId, YangTextSource.class)
                               .get(SOURCE_TIMEOUT_SECONDS, TimeUnit.SECONDS);
             writeSource(resp, source);
 
@@ -430,7 +438,7 @@ public class YangSchemaServlet extends HttpServlet {
      * Looks up a {@link Module} by name and optional revision inside a
      * {@link SchemaContext}.
      */
-    private static Optional<Module> findModule(final SchemaContext ctx,
+    private static Optional<? extends Module> findModule(final SchemaContext ctx,
                                                 final String moduleName,
                                                 final String revisionParam) {
         if (revisionParam != null && !revisionParam.isBlank()) {
@@ -464,12 +472,12 @@ public class YangSchemaServlet extends HttpServlet {
                 .node(NetworkTopology.QNAME)
                 .node(Topology.QNAME)
                 .nodeWithKey(Topology.QNAME,
-                             TopologyKey.class,
-                             new TopologyKey(new TopologyId(TOPOLOGY_NETCONF)))
+                             org.opendaylight.yangtools.yang.common.QName.create(Topology.QNAME, "topology-id"),
+                             TOPOLOGY_NETCONF)
                 .node(Node.QNAME)
                 .nodeWithKey(Node.QNAME,
-                             NodeKey.class,
-                             new NodeKey(new NodeId(nodeId)))
+                             org.opendaylight.yangtools.yang.common.QName.create(Node.QNAME, "node-id"),
+                             nodeId)
                 .build();
     }
 
