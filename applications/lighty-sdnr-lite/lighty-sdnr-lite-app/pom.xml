@@ -23,8 +23,8 @@
         <dependencies>
                 <!-- Custom rfc6241 built against yangtools 14 for 2013 revision -->
                 <dependency>
-                        <groupId>org.opendaylight.netconf.model</groupId>
-                        <artifactId>rfc6241</artifactId>
+                        <groupId>org.opendaylight.netconf</groupId>
+                        <artifactId>odl-netconf-model-rfc6241</artifactId>
                         <version>6.0.6-SNAPSHOT</version>
                         <exclusions>
                                 <exclusion>
@@ -40,8 +40,8 @@
                         <version>1.0.2</version>
                 </dependency>
                 <dependency>
-                        <groupId>org.opendaylight.netconf.model</groupId>
-                        <artifactId>rfc6243</artifactId>
+                        <groupId>org.opendaylight.netconf</groupId>
+                        <artifactId>odl-netconf-model-rfc6243</artifactId>
                         <version>6.0.6-SNAPSHOT</version>
                         <exclusions>
                                 <exclusion>
