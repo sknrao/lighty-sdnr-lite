@@ -1,6 +1,6 @@
 # Lighty SDN-R Lite
 
-**Lighty SDN-R Lite** is an optimized, plain-Java SDN-R controller powered by [lighty.io](https://lighty.io/) (version 24) and core [OpenDaylight](https://www.opendaylight.org/) components. 
+**Lighty SDN-R Lite** is an optimized, plain-Java SDN-R controller powered by [lighty.io](https://lighty.io/) (version 23) and core [OpenDaylight](https://www.opendaylight.org/) components. 
 
 Originally built as a standalone PNF-Registration application, it has been refactored into a generalized, extensible SDN-R platform. It operates entirely without an OSGi container, providing a lightweight, high-performance execution environment for RAN configuration and OAM infrastructure management.
 
@@ -29,6 +29,19 @@ A pure Java servlet that replaces the ODL-native `/yang-schema/` OSGi bundle.
 ### 3. IETF NETCONF 2013 Upgrade
 The application utilizes an upgraded NETCONF implementation (`iosmcn/netconf`) that migrates from the legacy 2011 IETF Netconf revision to the 2013 revision, ensuring compatibility with modern O-RAN elements. The controller actively loads the `ietf-netconf-acm` (Access Control Model) as required by the 2013 schemas.
 
+### 4. Data Provider Module
+Migrated from the CCSDK `data-provider` OSGi bundle, this module registers the `data-provider` YANG RPCs into MD-SAL's RPC service without any OSGi dependency. It uses a NoDb (no database) backend, suitable for a lightweight SDNR deployment.
+
+- **Registered RPCs** (invoked by the [darpan](https://github.com/ios-mcn-smo/unified-dashboard) dashboard):
+  - `POST /rests/operations/data-provider:read-status`
+  - `POST /rests/operations/data-provider:read-faultcurrent-list`
+  - `POST /rests/operations/data-provider:read-inventory-list`
+  - `POST /rests/operations/data-provider:read-network-element-connection-list`
+
+- **YANG models**: The `data-provider@2020-11-10.yang` model and its submodules (`data-provider-units`, `data-provider-g826-pm-types`, `data-provider-openroadm-pm-types`) are registered in `lightyControllerConfig.json` with `"usedBy":"RESTCONF"`.
+
+- **Design**: Uses pre-generated YANG bindings from `sdnr-wt-data-provider-model:2.2.2`. No YANG-to-Java code generation step is needed. The `RpcHelper` utility class bridges the `Rpc<I,O>` yangtools interface to method references for clean registration via `RpcProviderService.registerRpcImplementations()`.
+
 ---
 
 ## 📂 Architecture and Integration
@@ -36,14 +49,15 @@ The application utilizes an upgraded NETCONF implementation (`iosmcn/netconf`) t
 The controller lifecycle is fully managed within `Main.java` located at:
 `applications/lighty-sdnr-lite/lighty-sdnr-lite-app/src/main/java/org/iosmcn/lighty/sdnr/lite/app/Main.java`
 
-Modules are wired in the following sequence:
+Modules are wired in the following startup sequence:
 1. `LightyController` (MD-SAL datastore)
-2. `CommunityRestConf` (Jetty Server and REST endpoints)
-3. `LightyYangSchemaModule` (YANG schema servlet)
-4. `NetconfTopologyPlugin` (NETCONF southbound)
-5. `PnfModule` (PNF Kafka Listener)
+2. `CommunityRestConf` + `OpenApiLighty` (Jetty server and REST/OpenAPI endpoints)
+3. `LightyYangSchemaModule` (YANG schema servlet at `/yang-schema/*`)
+4. `NetconfTopologyPlugin` + `NetconfCallhomePlugin` (NETCONF southbound)
+5. `PnfModule` (PNF Kafka listener)
+6. `LightyDataProvider` (data-provider RPCs)
 
-*(Note: The upcoming `data-provider` migration for persistence will also plug directly into this module flow).*
+Shutdown is in reverse order, with `LightyDataProvider` closing first.
 
 ---
 
@@ -53,20 +67,25 @@ To build and run the `lighty-sdnr-lite` artifacts locally:
 
 1. **Install JDK**: Ensure [JDK 21](https://adoptium.net/temurin/releases/) is installed.
 2. **Install Maven**: Ensure you have Maven 3.9.5 or later.
-3. **Setup Maven**: Use the standard ODL [settings.xml](https://github.com/opendaylight/odlparent/blob/master/settings.xml) in your `~/.m2/` directory.
+3. **Setup Maven**: Use the standard ODL [settings.xml](https://github.com/opendaylight/odlparent/blob/master/settings.xml) in your `~/.m2/` directory. You will also need GitHub Packages credentials for the `ios-mcn-smo/netconf` custom repository.
 4. **Compile**: Run the following command from the root directory:
    ```bash
-   mvn clean install -DskipTests
+   mvn clean package -DskipTests -P github-packages
    ```
 
 ## 🐳 Docker Deployment
 
-A lightweight Alpine-based Java runtime Docker image is generated during the build.
-To package the Docker image locally, navigate to the applications directory and run:
+A lightweight Alpine-based Java 21 runtime Docker image is generated during the build.
+To package the Docker image locally:
 
 ```bash
-cd applications/lighty-sdnr-lite
-mvn clean package -P docker -DskipTests
+mvn clean package -DskipTests -P github-packages,docker
 ```
 
-This will build the `iosmcn-sdnrlite:latest` image containing the compiled jar, `lightyControllerConfig.json`, and the startup entrypoint scripts.
+This will build the `iosmcn-sdnrlite:latest` image containing the compiled fat JAR (with all modules including `data-provider`), `lightyControllerConfig.json`, and the startup entrypoint script.
+
+The container exposes port **8888** for RESTCONF and serves the following endpoints:
+- `/rests/data/...` — RESTCONF data resources
+- `/rests/operations/data-provider:*` — data-provider RPCs
+- `/yang-schema/*` — YANG schema text provider
+- `/openapi/explorer/` — OpenAPI documentation

@@ -31,6 +31,7 @@ import io.lighty.modules.southbound.netconf.impl.config.NetconfConfiguration;
 import io.lighty.modules.southbound.netconf.impl.util.NetconfConfigUtils;
 import io.lighty.openapi.OpenApiLighty;
 import io.lighty.server.LightyJettyServerProvider;
+import org.iosmcn.lighty.sdnr.dataprovider.LightyDataProvider;
 import org.iosmcn.lighty.sdnr.yangschema.LightyYangSchemaModule;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -57,6 +58,7 @@ public class Main {
     private CommunityRestConf restconf;
     private LightyModule netconfSBPlugin;
     private LightyModule pnfModule;
+    private LightyModule dataProviderModule;
     private LightyModule yangSchemaModule;
     private ModulesConfig modulesConfig = ModulesConfig.getDefaultModulesConfig();
     private NetconfCallhomePlugin callhomePlugin;
@@ -265,6 +267,17 @@ public class Main {
         }
 
         LOG.info("PNF Registration module started successfully.");
+
+        //6. start DataProvider module
+        LOG.info("Starting DataProvider module...");
+        this.dataProviderModule = new LightyDataProvider(
+            this.lightyController.getServices());
+        final boolean dataProviderStartOk = this.dataProviderModule.start()
+                .get(modulesConfig.getModuleTimeoutSeconds(), TimeUnit.SECONDS);
+        if (!dataProviderStartOk) {
+            throw new ModuleStartupException("DataProvider module startup failed!");
+        }
+        LOG.info("DataProvider module started successfully.");
     }
 
     private void closeLightyModule(final LightyModule module) {
@@ -276,6 +289,7 @@ public class Main {
     public void shutdown() {
         LOG.info("Lighty.io and RESTCONF-NETCONF shutting down ...");
         final Stopwatch stopwatch = Stopwatch.createStarted();
+        closeLightyModule(this.dataProviderModule);
         closeLightyModule(this.yangSchemaModule);
         closeLightyModule(this.pnfModule);
         closeLightyModule(this.netconfSBPlugin);

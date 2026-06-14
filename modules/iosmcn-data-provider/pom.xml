@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2026 PANTHEON.tech, s.r.o. and others.  All rights reserved.
+
+  This program and the accompanying materials are made available under the
+  terms of the Eclipse Public License v1.0 which accompanies this distribution,
+  and is available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.lighty.core</groupId>
+        <artifactId>lighty-parent</artifactId>
+        <version>23.0.0</version>
+    </parent>
+
+    <groupId>org.iosmcn.lighty.sdnr</groupId>
+    <artifactId>data-provider-module</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>iosmcn :: ${project.artifactId}</name>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <properties>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+    </properties>
+
+    <dependencies>
+        <!-- Lighty controller (LightyServices, AbstractLightyModule) -->
+        <dependency>
+            <groupId>io.lighty.core</groupId>
+            <artifactId>lighty-controller</artifactId>
+        </dependency>
+        <!-- CCSDK data-provider model: YANG bindings (RPC interfaces, input/output types) -->
+        <dependency>
+            <groupId>org.onap.ccsdk.features.sdnr.wt</groupId>
+            <artifactId>sdnr-wt-data-provider-model</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <!-- CCSDK common (YangToolsMapperHelper) -->
+        <dependency>
+            <groupId>org.onap.ccsdk.features.sdnr.wt</groupId>
+            <artifactId>sdnr-wt-common</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <!-- OpenROADM PM types (transitive YANG import of data-provider.yang) -->
+        <dependency>
+            <groupId>org.onap.ccsdk.features.sdnr.wt</groupId>
+            <artifactId>openroadm-pm-types</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <!-- OSGi compile-time stubs (CCSDK code references OSGi types) -->
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+            <version>5.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Guava (ListenableFuture) -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <!-- SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>onap-public</id>
+            <name>ONAP Public</name>
+            <url>https://nexus.onap.org/content/groups/public/</url>
+        </repository>
+    </repositories>
+</project>

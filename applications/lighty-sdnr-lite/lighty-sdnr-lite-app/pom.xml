@@ -100,6 +100,11 @@
             <artifactId>yang-schema-module</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.iosmcn.lighty.sdnr</groupId>
+            <artifactId>data-provider-module</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
                 <dependency>
                         <groupId>io.lighty.applications</groupId>
                         <artifactId>lighty-app-modules-config</artifactId>

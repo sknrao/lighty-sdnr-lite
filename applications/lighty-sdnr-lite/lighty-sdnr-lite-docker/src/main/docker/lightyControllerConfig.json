@@ -45,7 +45,12 @@
                 { "usedBy":"NETCONF","name":"ietf-netconf-monitoring","revision":"2010-10-04","nameSpace":"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring"},
                 { "usedBy":"NETCONF","name":"ietf-netconf-notifications","revision":"2012-02-06","nameSpace":"urn:ietf:params:xml:ns:yang:ietf-netconf-notifications"},
                 { "usedBy":"NETCONF","name":"sysrepo-plugind","revision":"2020-12-10","nameSpace":"urn:sysrepo:plugind"},
-                { "usedBy":"NETCONF","name":"ietf-netconf-acm","revision":"2018-02-14","nameSpace":"urn:ietf:params:xml:ns:yang:ietf-netconf-acm"}
+                { "usedBy":"NETCONF","name":"ietf-netconf-acm","revision":"2018-02-14","nameSpace":"urn:ietf:params:xml:ns:yang:ietf-netconf-acm"},
+                { "usedBy":"RESTCONF","name":"org-openroadm-pm-types","revision":"2019-11-29","nameSpace":"http://org/openroadm/pm-types"},
+                { "usedBy":"RESTCONF","name":"data-provider","revision":"2020-11-10","nameSpace":"urn:opendaylight:params:xml:ns:yang:data-provider"},
+                { "usedBy":"RESTCONF","name":"data-provider-units","revision":"2020-04-13","nameSpace":"urn:opendaylight:params:xml:ns:yang:data-provider-units"},
+                { "usedBy":"RESTCONF","name":"data-provider-g826-pm-types","revision":"2020-04-13","nameSpace":"urn:opendaylight:params:xml:ns:yang:data-provider-g836-pm-types"},
+                { "usedBy":"RESTCONF","name":"data-provider-openroadm-pm-types","revision":"2020-04-13","nameSpace":"urn:opendaylight:params:xml:ns:yang:data-provider-openroadm-pm-types"}
             ]
         }
     },
