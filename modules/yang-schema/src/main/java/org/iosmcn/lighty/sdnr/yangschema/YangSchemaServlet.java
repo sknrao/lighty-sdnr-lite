@@ -69,7 +69,7 @@ import org.opendaylight.yangtools.yang.data.api.YangInstanceIdentifier;
 import org.opendaylight.yangtools.yang.model.api.SchemaContext;   // pre-Scandium
 // import org.opendaylight.yangtools.yang.model.api.EffectiveModelContext; // Scandium+
 import org.opendaylight.yangtools.yang.model.api.Module;
-import org.opendaylight.mdsal.dom.api.DOMYangTextSourceProvider;
+import org.opendaylight.mdsal.dom.api.DOMSchemaService.YangTextSourceExtension;
 import org.opendaylight.yangtools.yang.model.repo.api.SchemaRepository;
 import org.opendaylight.yangtools.yang.model.api.source.SourceIdentifier;
 import org.opendaylight.yangtools.yang.model.api.source.YangTextSource;
@@ -288,7 +288,7 @@ public class YangSchemaServlet extends HttpServlet {
         }
 
         final DOMSchemaService mountedSchemaService = mountedSchemaServiceOpt.get();
-        DOMYangTextSourceProvider extension = mountedSchemaService.extension(DOMYangTextSourceProvider.class);
+        YangTextSourceExtension extension = mountedSchemaService.extension(YangTextSourceExtension.class);
 
         // ── 3c. Resolve the module inside the device SchemaContext ─────────
         //
@@ -387,24 +387,16 @@ public class YangSchemaServlet extends HttpServlet {
      * change the TODO line below to write to {@code Writer} instead.
      */
     private static void writeSource(final HttpServletResponse resp,
-                                    final YangTextSchemaSource source)
+                                    final YangTextSource source)
             throws IOException {
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("text/plain; charset=UTF-8");
 
-        // ── PRE-SCANDIUM (ByteSource) ─────────────────────────────────────
-        // YangTextSchemaSource.copyTo(OutputStream) streams raw bytes.
-        source.copyTo(resp.getOutputStream());
-        resp.getOutputStream().flush();
-
-        // ── SCANDIUM+ (CharSource) — replace the two lines above with: ────
-        // TODO: if upgrading to Scandium/Potassium/Calcium yangtools,
-        //       comment out the ByteSource block above and uncomment this:
-        //
-        // resp.setCharacterEncoding("UTF-8");
-        // source.copyTo(resp.getWriter());
-        // resp.getWriter().flush();
+        // ── SCANDIUM+ (CharSource) ────
+        resp.setCharacterEncoding("UTF-8");
+        source.copyTo(resp.getWriter());
+        resp.getWriter().flush();
     }
 
     // ─────────────────────────────────────────────────────────────────────
