@@ -56,9 +56,9 @@ import org.eclipse.jetty.servlet.ServletHolder;
 
 import org.opendaylight.mdsal.dom.api.DOMMountPointService;
 import org.opendaylight.mdsal.dom.api.DOMSchemaService;
-import org.opendaylight.mdsal.dom.api.DOMSchemaServiceExtension;
+import org.opendaylight.mdsal.dom.api.DOMYangTextSourceProvider;
 import org.opendaylight.yangtools.yang.model.repo.api.SchemaRepository;
-import org.opendaylight.yangtools.yang.model.repo.api.YangTextSchemaSource;
+import org.opendaylight.yangtools.yang.model.api.source.YangTextSource;
 import org.opendaylight.yangtools.yang.model.repo.spi.SchemaSourceProvider;
 
 import org.slf4j.Logger;
@@ -175,6 +175,7 @@ public class LightyYangSchemaModule extends AbstractLightyModule {
         //   Lighty 18+:            same package, look for the text-source extension
         //
         try {
+            final DOMYangTextSourceProvider yangTextSchemaSourceExtension = lightyServices.getDOMSchemaService().extension(DOMYangTextSourceProvider.class);
             final Map<DOMSchemaServiceExtension,
                       DOMSchemaServiceExtension> extensions =
                     (Map<DOMSchemaServiceExtension, DOMSchemaServiceExtension>)

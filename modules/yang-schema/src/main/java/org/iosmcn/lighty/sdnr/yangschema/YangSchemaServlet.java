@@ -69,9 +69,10 @@ import org.opendaylight.yangtools.yang.data.api.YangInstanceIdentifier;
 import org.opendaylight.yangtools.yang.model.api.SchemaContext;   // pre-Scandium
 // import org.opendaylight.yangtools.yang.model.api.EffectiveModelContext; // Scandium+
 import org.opendaylight.yangtools.yang.model.api.Module;
+import org.opendaylight.mdsal.dom.api.DOMYangTextSourceProvider;
 import org.opendaylight.yangtools.yang.model.repo.api.SchemaRepository;
-import org.opendaylight.yangtools.yang.model.repo.api.SourceIdentifier;
-import org.opendaylight.yangtools.yang.model.repo.api.YangTextSchemaSource;
+import org.opendaylight.yangtools.yang.model.api.source.SourceIdentifier;
+import org.opendaylight.yangtools.yang.model.api.source.YangTextSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -207,10 +208,7 @@ public class YangSchemaServlet extends HttpServlet {
             // Pre-Scandium return type: ListenableFuture<YangTextSchemaSource>
             // Scandium+:               FluentFuture<YangTextSchemaSource>
             // Both implement Future<YangTextSchemaSource>, so .get() works for both.
-            final YangTextSchemaSource source =
-                    globalSchemaRepository
-                            .getSchemaSource(sourceId, YangTextSchemaSource.class)
-                            .get(SOURCE_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+            YangTextSource source = globalSchemaRepository.getSource(sourceId).get(SOURCE_TIMEOUT_SECONDS, TimeUnit.SECONDS);
 
             writeSource(resp, source);
 
@@ -290,6 +288,7 @@ public class YangSchemaServlet extends HttpServlet {
         }
 
         final DOMSchemaService mountedSchemaService = mountedSchemaServiceOpt.get();
+        DOMYangTextSourceProvider extension = mountedSchemaService.extension(DOMYangTextSourceProvider.class);
 
         // ── 3c. Resolve the module inside the device SchemaContext ─────────
         //
