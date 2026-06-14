@@ -131,8 +131,8 @@ public class Main {
                     NetconfConfigUtils.NETCONF_TOPOLOGY_MODELS.stream(),
                     NetconfConfigUtils.NETCONF_CALLHOME_MODELS.stream(),
                     java.util.Set.of(
-                        org.opendaylight.yang.svc.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev110601.YangModuleInfoImpl.getInstance(),
-                        org.opendaylight.yang.svc.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev130929.YangModuleInfoImpl.getInstance()
+                        org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev110601.YangModuleInfoImpl.getInstance(),
+                        org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev130929.YangModuleInfoImpl.getInstance()
                     ).stream())
                     .flatMap(s -> s).collect(Collectors.toSet());
                 ArrayNode arrayNode = YangModuleUtils
@@ -148,8 +148,8 @@ public class Main {
                     NetconfConfigUtils.NETCONF_TOPOLOGY_MODELS.stream(),
                     NetconfConfigUtils.NETCONF_CALLHOME_MODELS.stream(),
                     java.util.Set.of(
-                        org.opendaylight.yang.svc.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev110601.YangModuleInfoImpl.getInstance(),
-                        org.opendaylight.yang.svc.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev130929.YangModuleInfoImpl.getInstance()
+                        org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev110601.YangModuleInfoImpl.getInstance(),
+                        org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev130929.YangModuleInfoImpl.getInstance()
                     ).stream())
                     .flatMap(s -> s).collect(Collectors.toSet());
                 ArrayNode arrayNode = YangModuleUtils
