@@ -43,12 +43,12 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.yangtools</groupId>
-            <artifactId>yang-model-repo-api</artifactId>
+            <artifactId>yang-repo-api</artifactId>
             <version>14.0.20</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.yangtools</groupId>
-            <artifactId>yang-model-repo-spi</artifactId>
+            <artifactId>yang-repo-spi</artifactId>
             <version>14.0.20</version>
         </dependency>
         <dependency>
