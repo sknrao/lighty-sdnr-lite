@@ -45,7 +45,7 @@
  *
  * ─────────────────────────────────────────────────────────────────────────
  */
-package org.iosmcn.sdnr.module;
+package org.iosmcn.lighty.sdnr.yangschema;
 
 import io.lighty.core.controller.api.AbstractLightyModule;
 import io.lighty.core.controller.api.LightyServices;
@@ -53,8 +53,6 @@ import io.lighty.modules.northbound.restconf.community.impl.CommunityRestConf;
 
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-
-import org.iosmcn.sdnr.servlet.YangSchemaServlet;
 
 import org.opendaylight.mdsal.dom.api.DOMMountPointService;
 import org.opendaylight.mdsal.dom.api.DOMSchemaService;

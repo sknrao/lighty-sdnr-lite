@@ -31,7 +31,7 @@ import io.lighty.modules.southbound.netconf.impl.config.NetconfConfiguration;
 import io.lighty.modules.southbound.netconf.impl.util.NetconfConfigUtils;
 import io.lighty.openapi.OpenApiLighty;
 import io.lighty.server.LightyJettyServerProvider;
-import org.iosmcn.sdnr.module.LightyYangSchemaModule;
+import org.iosmcn.lighty.sdnr.yangschema.LightyYangSchemaModule;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;

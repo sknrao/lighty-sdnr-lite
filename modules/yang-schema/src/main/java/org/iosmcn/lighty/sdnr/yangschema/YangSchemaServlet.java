@@ -41,7 +41,7 @@
  *
  * ─────────────────────────────────────────────────────────────────────────
  */
-package org.iosmcn.sdnr.servlet;
+package org.iosmcn.lighty.sdnr.yangschema;
 
 import java.io.IOException;
 import java.io.PrintWriter;

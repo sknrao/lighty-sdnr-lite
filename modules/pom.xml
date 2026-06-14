@@ -21,5 +21,6 @@
 
     <modules>
         <module>iosmcn-pnf-registration</module>
+        <module>yang-schema</module>
     </modules>
 </project>

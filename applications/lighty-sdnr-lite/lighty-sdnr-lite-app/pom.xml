@@ -79,10 +79,15 @@
                         <version>23.0.0</version>
                 </dependency>
                 <dependency>
-                        <groupId>org.iosmcn.lighty.applications</groupId>
-                        <artifactId>mountpoint-registrar</artifactId>
-                        <version>0.0.1-SNAPSHOT</version>
-                </dependency>
+            <groupId>org.iosmcn.lighty.applications</groupId>
+            <artifactId>mountpoint-registrar</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.iosmcn.lighty.sdnr</groupId>
+            <artifactId>yang-schema-module</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
                 <dependency>
                         <groupId>io.lighty.applications</groupId>
                         <artifactId>lighty-app-modules-config</artifactId>
