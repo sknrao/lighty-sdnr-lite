@@ -80,6 +80,9 @@
 					<id>github</id>
 					<name>github-packages</name>
 					<url>https://maven.pkg.github.com/ios-mcn-smo/netconf</url>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
 				</repository>
 			</repositories>
 			<pluginRepositories>
@@ -87,6 +90,9 @@
 					<id>github</id>
 					<name>github-packages</name>
 					<url>https://maven.pkg.github.com/ios-mcn-smo/netconf</url>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
 				</pluginRepository>
 			</pluginRepositories>
 		</profile>
