@@ -15,8 +15,8 @@ RUN chown -R iosmcn:iosmcn ${IOSMCN_HOME}
 USER iosmcn
 
 COPY LICENSE ${iosmcn.app.name} entrypoint.sh app/
-COPY restConfConfig.json config/
+COPY lightyControllerConfig.json config/
 
 EXPOSE 8888
 WORKDIR /opt/iosmcn
-ENTRYPOINT ["/opt/iosmcn/app/entrypoint.sh", "/opt/iosmcn/app/${iosmcn.app.jar}", "/opt/iosmcn/config/restConfConfig.json"]
+ENTRYPOINT ["/opt/iosmcn/app/entrypoint.sh", "/opt/iosmcn/app/${iosmcn.app.jar}", "/opt/iosmcn/config/lightyControllerConfig.json"]

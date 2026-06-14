@@ -68,7 +68,7 @@
 								<resource>
 									<directory>src/main/docker</directory>
 									<includes>
-										<include>restConfConfig.json</include>
+										<include>lightyControllerConfig.json</include>
 									</includes>
 								</resource>
 							</resources>

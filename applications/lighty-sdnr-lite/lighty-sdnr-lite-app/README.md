@@ -43,9 +43,9 @@ URLs for OpenApi: https://datatracker.ietf.org/doc/html/rfc8040
   RestConfConfiguration restConfConfig
       = RestConfConfigUtils.getRestConfConfiguration(is);
 ```
-`java -jar iosmcn-pnf-registration-app-23.0.0-SNAPSHOT.jar /path/to/restConfConfig.json`
+`java -jar iosmcn-pnf-registration-app-23.0.0-SNAPSHOT.jar /path/to/lightyControllerConfig.json`
 
-Example configuration is [here](applications/iosmcn-pnf-registration-aggregator/iosmcn-pnf-registration-app-docker/src/main/docker/restConfConfig.json)
+Example configuration is [here](../../lighty-sdnr-lite-docker/src/main/docker/lightyControllerConfig.json)
 
 ## Setup Logging
 Default logging configuration may be overwritten by JVM option

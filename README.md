@@ -23,7 +23,7 @@ A pure Java servlet that replaces the ODL-native `/yang-schema/` OSGi bundle.
   - If a `nodeId` is provided, the servlet resolves the schema from the device's mounted `SchemaContext`.
   - If no node is provided, it falls back to the controller's global schema repository.
 - **Troubleshooting**:
-  - **404 Module not found**: Ensure the module is bundled in the classpath and listed in `restConfConfig.json`.
+  - **404 Module not found**: Ensure the module is bundled in the classpath and listed in `lightyControllerConfig.json`.
   - **404 No mounted device**: Ensure the NETCONF session to the node is successfully established in `topology-netconf`.
 
 ### 3. IETF NETCONF 2013 Upgrade
@@ -69,4 +69,4 @@ cd applications/lighty-sdnr-lite
 mvn clean package -P docker -DskipTests
 ```
 
-This will build the `iosmcn-sdnrlite:latest` image containing the compiled jar, `restConfConfig.json`, and the startup entrypoint scripts.
+This will build the `iosmcn-sdnrlite:latest` image containing the compiled jar, `lightyControllerConfig.json`, and the startup entrypoint scripts.
