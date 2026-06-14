@@ -44,7 +44,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.opendaylight.yangtools.binding.meta.YangModuleInfo;
-import org.opendaylight.yang.svc.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev110601.YangModuleInfoImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,7 +129,7 @@ public class Main {
                 Set<YangModuleInfo> modelPaths = Stream.of(RestConfConfigUtils.YANG_MODELS.stream(),
                     NetconfConfigUtils.NETCONF_TOPOLOGY_MODELS.stream(),
                     NetconfConfigUtils.NETCONF_CALLHOME_MODELS.stream(),
-                    java.util.Set.of(
+                    java.util.Set.<YangModuleInfo>of(
                         org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev130929.$YangModuleInfoImpl.getInstance()
                     ).stream())
                     .flatMap(s -> s).collect(Collectors.toSet());
@@ -146,7 +145,7 @@ public class Main {
                 Set<YangModuleInfo> modelPaths = Stream.of(RestConfConfigUtils.YANG_MODELS.stream(),
                     NetconfConfigUtils.NETCONF_TOPOLOGY_MODELS.stream(),
                     NetconfConfigUtils.NETCONF_CALLHOME_MODELS.stream(),
-                    java.util.Set.of(
+                    java.util.Set.<YangModuleInfo>of(
                         org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev130929.$YangModuleInfoImpl.getInstance()
                     ).stream())
                     .flatMap(s -> s).collect(Collectors.toSet());
