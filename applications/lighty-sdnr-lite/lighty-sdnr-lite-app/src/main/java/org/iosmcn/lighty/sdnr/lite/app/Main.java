@@ -128,10 +128,7 @@ public class Main {
                 modulesConfig = ModulesConfig.getModulesConfig(Files.newInputStream(configPath));
                 Set<YangModuleInfo> modelPaths = Stream.of(RestConfConfigUtils.YANG_MODELS.stream(),
                     NetconfConfigUtils.NETCONF_TOPOLOGY_MODELS.stream(),
-                    NetconfConfigUtils.NETCONF_CALLHOME_MODELS.stream(),
-                    java.util.Set.<YangModuleInfo>of(
-                        org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev130929.$YangModuleInfoImpl.getInstance()
-                    ).stream())
+                    NetconfConfigUtils.NETCONF_CALLHOME_MODELS.stream())
                     .flatMap(s -> s).collect(Collectors.toSet());
                 ArrayNode arrayNode = YangModuleUtils
                         .generateJSONModelSetConfiguration(
@@ -144,10 +141,7 @@ public class Main {
                 LOG.info("using default configuration ...");
                 Set<YangModuleInfo> modelPaths = Stream.of(RestConfConfigUtils.YANG_MODELS.stream(),
                     NetconfConfigUtils.NETCONF_TOPOLOGY_MODELS.stream(),
-                    NetconfConfigUtils.NETCONF_CALLHOME_MODELS.stream(),
-                    java.util.Set.<YangModuleInfo>of(
-                        org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.netconf.base._1._0.rev130929.$YangModuleInfoImpl.getInstance()
-                    ).stream())
+                    NetconfConfigUtils.NETCONF_CALLHOME_MODELS.stream())
                     .flatMap(s -> s).collect(Collectors.toSet());
                 ArrayNode arrayNode = YangModuleUtils
                         .generateJSONModelSetConfiguration(
