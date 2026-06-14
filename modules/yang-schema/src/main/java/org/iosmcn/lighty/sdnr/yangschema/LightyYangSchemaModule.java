@@ -290,10 +290,6 @@ public class LightyYangSchemaModule extends AbstractLightyModule {
                      SERVLET_PATH);
             return true;
 
-        } catch (NoSuchMethodError | NoSuchMethodException e) {
-            LOG.error("communityRestConf.getServer() is not available on this Lighty version. "
-                    + "Add a direct Jetty server reference or use reflection fallback.", e);
-            return false;
         } catch (Exception e) {
             LOG.error("Unexpected error registering YangSchemaServlet", e);
             return false;
