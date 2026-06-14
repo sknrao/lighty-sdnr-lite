@@ -20,6 +20,17 @@
                 <application.attach.zip>true</application.attach.zip>
                 <maven.deploy.skip>true</maven.deploy.skip>
         </properties>
+
+        <repositories>
+                <repository>
+                        <id>github</id>
+                        <name>github-packages</name>
+                        <url>https://maven.pkg.github.com/ios-mcn-smo/netconf</url>
+                        <snapshots>
+                                <enabled>true</enabled>
+                        </snapshots>
+                </repository>
+        </repositories>
         <dependencies>
                 <!-- Custom rfc6241 built against yangtools 14 for 2013 revision -->
                 <dependency>
