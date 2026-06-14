@@ -7,6 +7,7 @@ This application starts:
 * Lighty Controller
 * OpenDaylight RESTCONF plugin
 * OpenDaylight OpenApi servlet
+* Yang Schema Servlet
 * NETCONF south-bound plugin
 * PNF registration
 * Callhome
@@ -16,19 +17,20 @@ build the project: ```mvn clean install```
 
 ### Start this demo example
 * build the project using ```mvn clean install```
-* go to target directory ```cd applications/iosmcn-pnf-registration-app/target``` 
-* unzip example application bundle ```unzip  iosmcn-pnf-registration-app-23.0.0-SNAPSHOT-bin.zip```
-* go to unzipped application directory ```cd iosmcn-pnf-registration-app-23.0.0-SNAPSHOT```
-* start controller example controller application ```java -jar iosmcn-pnf-registration-app-23.0.0-SNAPSHOT.jar``` 
+* go to target directory ```cd applications/lighty-sdnr-lite/lighty-sdnr-lite-app/target``` 
+* unzip example application bundle ```unzip  lighty-sdnr-lite-app-0.0.1-SNAPSHOT-bin.zip```
+* go to unzipped application directory ```cd lighty-sdnr-lite-app-0.0.1-SNAPSHOT```
+* start controller example controller application ```java -jar lighty-sdnr-lite-app-0.0.1-SNAPSHOT.jar``` 
 
 ### Test example application
-Once example application has been started using command ```java -jar iosmcn-pnf-registration-app-23.0.0-SNAPSHOT.jar``` 
-RESTCONF web interface is available at URL ```http://localhost:8888/restconf/*```
+Once example application has been started using command ```java -jar lighty-sdnr-lite-app-0.0.1-SNAPSHOT.jar``` 
+RESTCONF web interface is available at URL ```http://localhost:8888/rests/*```
 
 ##### URLs to start with
-* __GET__ ```http://localhost:8888/restconf/operations```
-* __GET__ ```http://localhost:8888/restconf/data/network-topology:network-topology?content=config```
-* __GET__ ```http://localhost:8888/restconf/data/network-topology:network-topology?content=nonconfig```
+* __GET__ ```http://localhost:8888/rests/operations```
+* __GET__ ```http://localhost:8888/rests/data/network-topology:network-topology?content=config```
+* __GET__ ```http://localhost:8888/rests/data/network-topology:network-topology?content=nonconfig```
+* __GET__ ```http://localhost:8888/yang-schema/ietf-netconf?revision=2013-09-29```
 
 ##### OpenApi UI
 This application example has active [OpenApi](https://swagger.io/) UI for RESTCONF.
@@ -42,8 +44,7 @@ URLs for OpenApi: https://datatracker.ietf.org/doc/html/rfc8040
   InputStream is = Files.newInputStream(configPath);
   RestConfConfiguration restConfConfig
       = RestConfConfigUtils.getRestConfConfiguration(is);
-```
-`java -jar iosmcn-pnf-registration-app-23.0.0-SNAPSHOT.jar /path/to/lightyControllerConfig.json`
+`java -jar lighty-sdnr-lite-app-0.0.1-SNAPSHOT.jar /path/to/lightyControllerConfig.json`
 
 Example configuration is [here](../../lighty-sdnr-lite-docker/src/main/docker/lightyControllerConfig.json)
 
@@ -53,7 +54,7 @@ Default logging configuration may be overwritten by JVM option
 
 Content of ```log4j2.xml``` is described [here](https://logging.apache.org/log4j/2.x/manual/configuration.html).
 
-Example log file is [here](/home/pavanashree/Pavana/iosmcn_lighty_pnfreg/applications/iosmcn-pnf-registration-aggregator/iosmcn-pnf-registration-app/src/main/resources/log4j2.xml).
+Example log file is [here](src/main/resources/log4j2.xml).
 
 ## Mountpoint-registrar config file
 Sample config file related to mountpoint-registrar is [here](mountpoint-registrar.properties)
