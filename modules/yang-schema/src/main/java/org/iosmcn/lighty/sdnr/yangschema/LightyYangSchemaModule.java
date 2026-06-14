@@ -174,23 +174,8 @@ public class LightyYangSchemaModule extends AbstractLightyModule {
         //   ODL Silicon/Aluminium: org.opendaylight.mdsal.dom.spi.DOMSchemaServiceExtension
         //   Lighty 18+:            same package, look for the text-source extension
         //
-        try {
-            final YangTextSourceExtension yangTextSchemaSourceExtension = lightyServices.getDOMSchemaService().extension(YangTextSourceExtension.class);
-            for (final Object ext : domSchemaService.getExtensions().values()) {
-                if (ext instanceof SchemaRepository) {
-                    LOG.debug("SchemaRepository obtained via DOMSchemaService extension: {}",
-                              ext.getClass().getName());
-                    return (SchemaRepository) ext;
-                }
-                if (ext instanceof SchemaSourceProvider) {
-                    if (ext instanceof SchemaRepository) {
-                        return (SchemaRepository) ext;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            LOG.debug("Extension route failed (may be expected on older Lighty): {}", e.getMessage());
-        }
+        // ── Strategy A: Extension route (Removed) ─────────────────────────
+        // getExtensions() no longer exists in this MD-SAL version.
 
         // ── Strategy B: direct cast ───────────────────────────────────────
         //

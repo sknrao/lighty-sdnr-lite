@@ -298,7 +298,7 @@ public class YangSchemaServlet extends HttpServlet {
         //
         final SchemaContext deviceContext = mountedSchemaService.getGlobalContext();
 
-        final Optional<Module> moduleOpt = findModule(deviceContext, moduleName, revisionParam);
+        final Optional<? extends Module> moduleOpt = findModule(deviceContext, moduleName, revisionParam);
 
         if (moduleOpt.isEmpty()) {
             // Module not in device context — try the controller-global repo
@@ -327,13 +327,8 @@ public class YangSchemaServlet extends HttpServlet {
         //
         SchemaRepository deviceRepo = null;
         final Optional<DOMSchemaService> mountedSchemaServiceOpt2 = mountPoint.getService(DOMSchemaService.class);
-        if (mountedSchemaServiceOpt2.isPresent()) {
-            for (final Object ext : mountedSchemaServiceOpt2.get().getExtensions().values()) {
-                if (ext instanceof SchemaRepository) {
-                    deviceRepo = (SchemaRepository) ext;
-                    break;
-                }
-            }
+        if (mountedSchemaServiceOpt2.isPresent() && mountedSchemaServiceOpt2.get() instanceof SchemaRepository) {
+            deviceRepo = (SchemaRepository) mountedSchemaServiceOpt2.get();
         }
 
         if (deviceRepo != null) {

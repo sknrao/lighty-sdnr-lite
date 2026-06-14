@@ -7,6 +7,7 @@
         <groupId>io.lighty.core</groupId>
         <artifactId>lighty-app-parent</artifactId>
         <version>23.0.0</version>
+        <relativePath/>
     </parent>
         <groupId>org.iosmcn.lighty.sdnr</groupId>
         <artifactId>lighty-sdnr-lite-app</artifactId>
