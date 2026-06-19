@@ -38,6 +38,22 @@
             <groupId>io.lighty.core</groupId>
             <artifactId>lighty-controller</artifactId>
         </dependency>
+<<<<<<< HEAD
+=======
+        <!-- NETCONF bindings for topology -->
+        <dependency>
+            <groupId>org.opendaylight.netconf</groupId>
+            <artifactId>netconf-client-mdsal</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.netconf</groupId>
+            <artifactId>netconf-topology</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.mdsal.model</groupId>
+            <artifactId>ietf-topology</artifactId>
+        </dependency>
+>>>>>>> 1671bff (successfull test of data-provider)
         <!-- CCSDK data-provider model: YANG bindings (RPC interfaces, input/output types) -->
         <dependency>
             <groupId>org.onap.ccsdk.features.sdnr.wt</groupId>

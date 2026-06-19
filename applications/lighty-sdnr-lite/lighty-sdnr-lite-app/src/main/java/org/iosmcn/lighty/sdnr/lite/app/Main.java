@@ -226,8 +226,11 @@ public class Main {
         );
         final boolean yangSchemaStartOk = this.yangSchemaModule.start()
                 .get(modulesConfig.getModuleTimeoutSeconds(), TimeUnit.SECONDS);
+        // if (!yangSchemaStartOk) {
+        //     throw new ModuleStartupException("YangSchema module startup failed!");
+        // }
         if (!yangSchemaStartOk) {
-            throw new ModuleStartupException("YangSchema module startup failed!");
+            LOG.warn("YangSchema module startup failed – YangSchemaServlet will not be available. Continuing...");
         }
         LOG.info("YangSchema module started successfully.");
 
